@@ -70,17 +70,18 @@ function QuizProvider({ children }) {
 
   const numQuestions = questions.length;
 
-  const maxPossiblePoints = questions.reduce(
-    (prev, current) => prev + current.points,
-    0
-  );
+  const maxPossiblePoints = Array.isArray(questions)
+    ? questions.reduce((sum, question) => sum + question.points, 0)
+    : 0;
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`/data/questions.json`);
+        const res = await fetch("/data/questions.json");
         const data = await res.json();
-        dispatch({ type: "dataReceived", payload: data });
+        // Extract the questions array from the object
+        const questionsArray = data.questions;
+        dispatch({ type: "dataReceived", payload: questionsArray });
       } catch (err) {
         dispatch({ type: "dataFailed" });
       }
