@@ -1,7 +1,7 @@
 function Header() {
   return (
     <header className="app-header">
-      <img src="/public/react.svg" alt="react-logo"></img>
+      <img src="/react.svg" alt="react-logo"></img>
       <h1> The React Quiz</h1>
     </header>
   );
