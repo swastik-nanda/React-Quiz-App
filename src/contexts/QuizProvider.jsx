@@ -78,7 +78,7 @@ function QuizProvider({ children }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/questions`);
+        const res = await fetch(`/data/questions.json`);
         const data = await res.json();
         dispatch({ type: "dataReceived", payload: data });
       } catch (err) {
