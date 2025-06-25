@@ -1,0 +1,710 @@
+<!--
+  Project notes:
+-->
+
+<!--
+  CSS:
+
+  :root {
+  --color-darkest: #343a40;
+  --color-dark: #495057;
+  --color-medium: #ced4da;
+  --color-light: #f1f3f5;
+
+  --color-theme: #1098ad;
+  --color-accent: #ffa94d;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Codystar&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-light);
+  background-color: var(--color-darkest);
+  padding: 3.2rem;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  width: 50rem;
+}
+
+.app-header {
+  width: 66rem;
+  margin-bottom: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 2rem;
+  background-color: #495057;
+  border-radius: 100px;
+}
+
+img {
+  width: 14rem;
+}
+
+h1 {
+  font-family: "Codystar";
+  font-size: 5.6rem;
+}
+
+h2 {
+  font-size: 3.6rem;
+  margin-bottom: 2rem;
+}
+
+h3 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 4rem;
+}
+
+h4 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 2.4rem;
+}
+
+.start {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress {
+  margin-bottom: 4rem;
+  display: grid;
+  justify-content: space-between;
+  gap: 1.2rem;
+  grid-template-columns: auto auto;
+  font-size: 1.8rem;
+  color: var(--color-medium);
+}
+
+progress {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 12px;
+  grid-column: 1 / -1;
+}
+
+::-webkit-progress-bar {
+  background-color: var(--color-medium);
+  border-radius: 100px;
+}
+::-webkit-progress-value {
+  background-color: var(--color-theme);
+  border-radius: 100px;
+}
+
+.btn {
+  display: block;
+  font-family: inherit;
+  color: inherit;
+  font-size: 2rem;
+  border: 2px solid var(--color-dark);
+  background-color: var(--color-dark);
+  padding: 1.2rem 2.4rem;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: 0.3s;
+}
+
+.btn:not([disabled]):hover {
+  background-color: var(--color-darkest);
+}
+
+.btn-option:not([disabled]):hover {
+  transform: translateX(1.2rem);
+}
+
+.btn[disabled]:hover {
+  cursor: not-allowed;
+}
+
+.btn-ui {
+  float: right;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 3.2rem;
+}
+
+.btn-option {
+  width: 100%;
+  text-align: left;
+}
+
+.btn-option.correct {
+  background-color: var(--color-theme);
+  border: 2px solid var(--color-theme);
+  color: var(--color-light);
+}
+.btn-option.wrong {
+  background-color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+  color: var(--color-darkest);
+}
+
+.answer {
+  transform: translateX(2rem);
+}
+
+.result {
+  background-color: var(--color-theme);
+  color: var(--color-light);
+  border-radius: 100px;
+  text-align: center;
+  padding: 2rem 0;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1.6rem;
+}
+
+.result span {
+  font-size: 2.2rem;
+  margin-right: 4px;
+}
+
+.highscore {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 4.8rem;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+  gap: 1.6rem;
+
+  color: var(--color-medium);
+  font-size: 1.4rem;
+}
+
+.timer {
+  float: left;
+  font-size: 1.8rem;
+  color: var(--color-medium);
+  border: 2px solid var(--color-dark);
+  padding: 1.35rem 2.8rem;
+  border-radius: 100px;
+}
+
+/* CREDIT: https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
+.loader {
+  width: 50px;
+  height: 24px;
+  background: radial-gradient(circle closest-side, currentColor 90%, #0000) 0%
+      50%,
+    radial-gradient(circle closest-side, currentColor 90%, #0000) 50% 50%,
+    radial-gradient(circle closest-side, currentColor 90%, #0000) 100% 50%;
+  background-size: calc(100% / 3) 12px;
+  background-repeat: no-repeat;
+  animation: loader 1s infinite linear;
+}
+
+@keyframes loader {
+  20% {
+    background-position: 0% 0%, 50% 50%, 100% 50%;
+  }
+  40% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  60% {
+    background-position: 0% 50%, 50% 100%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 50%, 50% 50%, 100% 100%;
+  }
+}
+
+/* ********** */
+/* First counter example */
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 6rem;
+}
+
+.counter * {
+  font-size: inherit;
+  padding: 0.8rem;
+}
+
+-->
+
+<!--
+  useReducer Hook:
+
+  advanced way of managing state. (like useState).
+
+  useReducer has a pure function called reducer function that takes in a previous state as input along with an action
+  as argument and would return the next state.
+
+  they are used to manage complex states...basically when the states are gonna be an object instead of single values
+-->
+
+<!--
+  Eg of using useReducer:
+
+  function reducer(state, action) {  this is the reducer function that the dispatch would return
+  if (action.type === "inc") {
+    return state + 1;
+  }
+  if (action.type === "dec") {
+    return state - 1;
+  }
+  if (action.type === "setCount") {
+    return action.payload;
+  }
+}
+
+function DateCounter() {
+  // const [count, setCount] = useState(0);  //normal useState
+
+  const [count, dispatch] = useReducer(reducer, 0);  //takes an action as well as an initial state as value
+  const [step, setStep] = useState(1);
+
+  // This mutates the date object.
+  const date = new Date("june 21 2027");
+  date.setDate(date.getDate() + count);
+
+  const dec = function () {
+    dispatch({ type: "dec" });
+    // setCount((count) => count - 1);
+    // setCount((count) => count - step);
+  };
+
+  const inc = function () {
+    dispatch({ type: "inc" });  //we create an object for dispatch actions
+    // setCount((count) => count + 1);
+    // setCount((count) => count + step);
+  };
+
+  const defineCount = function (e) {
+    // setCount(Number(e.target.value));
+    dispatch({ type: "setCount", payload: Number(e.target.value) });
+  };
+
+  const defineStep = function (e) {
+    // setStep(Number(e.target.value));
+  };
+
+  const reset = function () {
+    // setCount(0);
+    // setStep(1);
+  };
+
+  return (
+    <div className="counter">
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={step}
+          onChange={defineStep}
+        />
+        <span>{step}</span>
+      </div>
+
+      <div>
+        <button onClick={dec}>-</button>
+        <input value={count} onChange={defineCount} />
+        <button onClick={inc}>+</button>
+      </div>
+
+      <p>{date.toDateString()}</p>
+
+      <div>
+        <button onClick={reset}>Reset</button>
+      </div>
+    </div>
+  );
+}
+
+
+what is really happening in the above code is that we use the useReducer hook instead of useState for managing states.
+unlike the useState, the useReducer takes not just the intial value as its intial state, it also receives a "reducer" function.
+
+for eg: const [count, dispatch] = useReducer(reducer, 0);
+here count is state where as dispatch is the function that will use the reducer function to give the next state.
+
+to use the dispatch function:
+
+function dec(){
+  dispatch({type: "dec"}); we have to declare a type for the dispatch action hence we create an object.
+}
+
+inside the reducer function (created outside the component)
+
+function reducer(state, action){  //this takes 2 args,,, the current state as well the action to be performed
+  if(action.type === "dec"){
+    return state - 1.
+  }
+  if(action.type === "setCount"){
+    return action.payload; //returns only the payload value read from the input element
+  }
+}
+
+there is also another property that we have to mention sometimes for eg in the case of setting a state we need to read the 
+value from the input to be set as the count. in that case we define a payload property alongside the "type" inside the 
+dispatch function.
+
+eg: function defineCount(e){
+  dispatch({type: "setCount", payload: Number(e.target.value)});
+}
+-->
+
+<!--
+  Better way of managin more states using useReducer:
+
+
+import React, { useReducer } from "react";
+
+const initialState = { count: 0, step: 1 };
+
+function reducer(state, action) {
+  switch (action.type) {  //to handle multiple state types
+    case "dec":
+      return { ...state, count: state.count - state.step };
+    case "inc":
+      return { ...state, count: state.count + state.step };
+    case "setCount":
+      return { ...state, count: action.payload };
+    case "setStep":
+      return { ...state, step: action.payload };
+    case "reset":
+      return initialState;
+    default:
+      throw new Error("Unknown Error");
+  }
+}
+
+function DateCounter() {
+ 
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { count, step } = state;
+
+  const date = new Date("june 21 2027");
+  date.setDate(date.getDate() + count);
+
+  const dec = function () {
+    dispatch({ type: "dec" });
+  };
+
+  const inc = function () {
+    dispatch({ type: "inc" });
+  };
+
+  const defineCount = function (e) {
+    dispatch({ type: "setCount", payload: Number(e.target.value) });
+  };
+
+  const defineStep = function (e) {
+    dispatch({ type: "setStep", payload: Number(e.target.value) });
+  };
+
+  const reset = function () {
+    dispatch({ type: "reset" });
+  };
+
+  return (
+    <div className="counter">
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={step}
+          onChange={defineStep}
+        />
+        <span>{step}</span>
+      </div>
+
+      <div>
+        <button onClick={dec}>-</button>
+        <input value={count} onChange={defineCount} />
+        <button onClick={inc}>+</button>
+      </div>
+
+      <p>{date.toDateString()}</p>
+
+      <div>
+        <button onClick={reset}>Reset</button>
+      </div>
+    </div>
+  );
+}
+export default DateCounter;
+
+thus all possible state updates are inside one reducer function (for a single component)
+
+-->
+
+<!--
+  Summarry of useState vs useReducer:
+
+  useState is sometimes not enough. example when there are too many state varaibles spread accross multiple event handlers.
+  Also when multiple event need to happen at the same time. And lastly when one state update depends on few other state.
+
+  syntax for useReducer:
+
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  it stores related pieces of state in a state object.
+  It requires a reducer function containing all the logic responsible for updating state.
+  reducer cannot mutate the state because it doest have any side effect.
+
+  reducer contains an action that defines how the state should be updated. action contains: type and payload(data).
+
+  it is just like the array.reduce method which accumulates all the state updates into one over time
+-->
+
+<!--
+  Creating a fake API to fetch data from there:
+
+  so basically use have to first ensure you have a json file consisting of all the data.
+
+  then install json server through: npm i json-server (in terminal)
+
+  then inside the package.json file: inside the scripts make a custom script called:
+
+  "server": "json-server --watch {folder}/{file} --port {port site eg: 8000}"
+
+  This is will then upload all the data inside the json file provided to a new api based on the mentioned port and then
+  we can fetch the data from over there
+-->
+
+<!--
+  Displaying the options as well as choosing the answer:
+
+  in the app:
+
+  const initialState = {
+    questions: [],
+    status: "loading",
+    index: 0,
+    answer: null,
+    points: 0
+  };
+  function reducer(state, action) {
+    switch (action.type) {
+      case "dataReceived":
+        return { ...state, questions: action.payload, status: "ready" };
+      case "dataFailed":
+        return { ...state, status: "error" };
+      case "start":
+        return { ...state, status: "active" };
+      case "answered":
+        const question = state.questions.at(state.index);
+        return { ...state, answer: action.payload, points: action.payload === question.correctOption ?
+                 state.points + question.points : state.points };
+      default:
+        throw new Error("Action is unknown!");
+    }
+
+    const [{ questions, status, index, answer, points }, dispatch] = useReducer(  //very important to destructure the different states
+      reducer,
+      initialState
+    );
+
+    <Question
+      question={questions[index]}
+      dispatch={dispatch}
+      answer={answer}
+    ></Question>
+
+  in the question component:
+
+  function Question({ question, dispatch, answer }) {
+    const hasAnswered = answer !== null;
+    return (
+      <div>
+        <h4>{question.question}</h4>
+        <div className="options">
+          {question.options.map((option, index) => (
+            <button
+              className={`btn btn-option ${index === answer ? `answer` : ""} ${
+                hasAnswered
+                  ? index === question.correctOption  //nested ternary conditioning
+                    ? "correct"
+                    : "wrong"
+                  : ""
+              }`}
+              key={index}
+              disabled={hasAnswered}
+              onClick={() => dispatch({ type: "answered", payload: index })}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  basically we want to set the answer state as well as check whether the selected answer is the correct option or not.
+  the above is done with the help of the index generated by the map method and checking it with the correctOption id of the
+  question. then we're just conditionally apply css class to the option
+
+  things to note is how we are destructuring states into the reducer hook, along with how we are using the initialState object
+  to mention all the states. as well as using the switch case properly to ensure the answer is set as a state and can be
+  updated accordingly.
+-->
+
+<!--
+  Moving to the next question:
+
+  in the app component:
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case "dataReceived":
+        return { ...state, questions: action.payload, status: "ready" };
+      case "dataFailed":
+        return { ...state, status: "error" };
+      case "start":
+        return { ...state, status: "active" };
+      case "answered":
+        const question = state.questions.at(state.index);
+        return {
+          ...state,
+          answer: action.payload,
+          points:
+            action.payload === question.correctOption
+              ? state.points + question.points
+              : state.points,
+        };
+      case "nextQuestion":
+        return { ...state, index: state.index + 1, answer: null }; //updating the index
+      default:
+        throw new Error("Action is unknown!");
+    }
+  }
+
+  {status === "active" && (
+    <>
+      <Question
+        question={questions[index]}
+        dispatch={dispatch}
+        answer={answer}
+      ></Question>
+      <NextButton dispatch={dispatch} answer={answer}></NextButton>
+    </>
+  )}
+
+
+  in the next button component:
+
+  function NextButton({ dispatch, answer }) {
+    function handleNextButton() {
+      dispatch({ type: "nextQuestion" });
+    }
+    if (answer === null) {
+      return null;
+    }
+    return (
+      <div>
+        <button className="btn btn-ui" onClick={handleNextButton}>
+          Next
+        </button>
+      </div>
+    );
+  }
+
+
+  what we're doing here is just increasing the index of the state whenever we click on the next button. the next button is
+  displayed only when there is an option selected as the answer. after this once we click on the next we are just setting the
+  answer back to null.
+
+  check the switch case for it. (very important)
+-->
+
+<!--
+  Creating the progress bar:
+
+  in the app:
+
+  <Progress
+    numQuestions={numQuestions}
+    index={index}
+    points={points}
+    maxPossiblePoints={maxPossiblePoints}
+    answer={answer}
+  ></Progress>
+
+  in the progress component:
+
+  function Progress({ index, numQuestions, points, maxPossiblePoints, answer }) {
+    return (
+      <header className="progress">
+        <progress    
+          max={numQuestions}
+          value={index + Number(answer !== null)}
+        ></progress>
+        <p>
+          Question <strong>{index + 1}</strong> / {numQuestions}
+        </p>
+        <p>
+          <strong>{points}</strong> / <strong>{maxPossiblePoints}</strong>
+        </p>
+      </header>
+    );
+  }
+
+  here the <progress /> is an html element having the max as well as value attributes
+
+  the value={index + Number(answer !== null)} inside the progress element is checking that if there is an answer, if no
+  then the Number() would give 0 so the index would not be incremented however when the Number() gives the value to be 1, then
+  the index would be incremented by 1. Therefore whenver we click on an answer then the progress bar is updated.
+
+
+  if we dont do the above the stuff then the progress bar would only be updated when we click on the next button
+-->
+
+<!--
+  Restarting a quiz:
+
+  here we need to set the current state back to the initial state however we still want the status and questions to be
+  the same as required for the quiz to run.
+
+  eg:
+
+  case "restartQuiz":
+   return { ...initialState, questions: state.questions, status: "ready", highscore: state.highscore };
+-->
